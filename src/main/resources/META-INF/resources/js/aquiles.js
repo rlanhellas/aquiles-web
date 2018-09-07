@@ -14,7 +14,7 @@ function initMasks() {
     $('.cep-mask').mask("00000-000");
     $('.phone-mask').mask('(00)00000-0000');
     $('.phone-fixo-mask').mask('(00)0000-0000');
-    $('.money-mask').mask("#.##0,00", {reverse: true});
+    $('.money-mask').maskMoney({allowNegative: true,thousands:'.', decimal:','});
     $('.phone-mask-noddd').mask('00000-0000');
     $('.ddd-mask').mask('00');
     $('.time-mask').mask('00:00');
@@ -46,9 +46,9 @@ function initMasks() {
         }).on('changeDate', function (e) {
             var atuTargetData = $('.datepicker-altfield-target').val();
             var novaTargetData = e.format('dd/mm/yyyy');
-            if(atuTargetData==''){
+            if (atuTargetData == '') {
                 $('.datepicker-altfield-target').val(novaTargetData);
-                $('.datepicker-altfield-target').datepicker('update',novaTargetData);
+                $('.datepicker-altfield-target').datepicker('update', novaTargetData);
             }
         });
     }
@@ -154,7 +154,7 @@ function autoScrollToAlertMessage() {
 /**
  * Close open messages from jsf MESSAGES
  * */
-function closeOpenAlertMessages(){
+function closeOpenAlertMessages() {
     //removido temporariamente para ajustes
     // $("#aquilesMessageContainer .alert").fadeTo(2000, 0).slideUp(500, function () {
     //     $(this).remove();
@@ -165,7 +165,7 @@ function superHandleAjaxEvents(data) {
     initMasks();
     autoCloseAlertMessage();
     autoScrollToAlertMessage();
-    if (data.status==='begin') {
+    if (data.status === 'begin') {
         closeOpenAlertMessages();
     }
 }

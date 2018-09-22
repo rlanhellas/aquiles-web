@@ -17,6 +17,13 @@
         <aquiles-core.version>1.0.0</aquiles-core.version>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>nexus-oceanquerobuy</id>
+            <url>http://ocean.querobuy.com.br:8081/repository/maven-releases/</url>
+        </repository>
+    </distributionManagement>
+
     <developers>
         <developer>
             <name>Ronaldo Lanhellas</name>

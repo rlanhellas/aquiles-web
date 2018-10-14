@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>br.com.aquiles</groupId>
     <artifactId>aquiles-web</artifactId>
-    <version>1.1.2</version>
+    <version>1.2.0</version>
     <name>Aquiles Framework - Web</name>
 
     <properties>
@@ -19,7 +19,7 @@
 
     <distributionManagement>
         <repository>
-            <id>nexus-oceanquerobuy</id>
+            <id>releases</id>
             <url>http://ocean.querobuy.com.br:8081/repository/maven-releases/</url>
         </repository>
     </distributionManagement>

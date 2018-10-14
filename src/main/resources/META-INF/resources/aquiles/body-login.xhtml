@@ -14,6 +14,8 @@
     <composite:attribute name="projectVersion" shortDescription="Versão do projeto que aparecerá no rodapé"/>
     <composite:attribute name="logoPath" shortDescription="Caminho da logomarca que será carregada no template"
                          required="true"/>
+    <composite:attribute name="useLogoPathAsURL" shortDescription="If TRUE logo path is used as URL in graphicImage"
+                         default="false" type="java.lang.Boolean"/>
     <composite:attribute name="showDefaultLoginFields"
                          shortDescription="Mostra os campos de login padrão, que são 'login' e 'senha'" default="true"/>
     <composite:attribute name="showDefaultLoginButtons"
@@ -50,8 +52,14 @@
             <aquiles:messages/>
 
             <div class="login-logo">
-                <h:graphicImage name="#{cc.attrs.logoPath}" width="#{cc.attrs.logoWidth}"
-                                height="#{cc.attrs.logoHeight}" style="margin-top:4px"/>
+                <h:panelGroup rendered="#{cc.attrs.useLogoPathAsURL}">
+                    <h:graphicImage url="#{cc.attrs.logoPath}" width="#{cc.attrs.logoWidth}"
+                                    height="#{cc.attrs.logoHeight}" style="margin-top:4px"/>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{not cc.attrs.useLogoPathAsURL}">
+                    <h:graphicImage name="#{cc.attrs.logoPath}" width="#{cc.attrs.logoWidth}"
+                                    height="#{cc.attrs.logoHeight}" style="margin-top:4px"/>
+                </h:panelGroup>
                 <h:outputText value="#{cc.attrs.projectName}" rendered="#{cc.attrs.showProjectName}"/>
                 <h:panelGroup rendered="#{cc.attrs.showProjectVersion}">
                 <span style="font-size: 12px; font-align: center;">ver

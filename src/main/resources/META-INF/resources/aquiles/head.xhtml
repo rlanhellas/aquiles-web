@@ -9,6 +9,8 @@
 
 <composite:interface>
     <composite:attribute name="faviconPath" shortDescription="Caminho do favicon" required="true"/>
+    <composite:attribute name="useIcoPathAsURL" shortDescription="If TRUE ico path is used as URL tag link"
+                         default="false" type="java.lang.Boolean"/>
     <composite:attribute name="title" shortDescription="Título da página" required="true"/>
 </composite:interface>
 <composite:implementation>
@@ -60,16 +62,21 @@
         <h:outputStylesheet name="third/plugins/summernote/summernote.css"/>
 
         <!-- bootstrap-datetimepicker -->
-        <h:outputStylesheet name="third/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css" />
+        <h:outputStylesheet name="third/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css"/>
 
         <h:outputStylesheet name="third/dist/css/skins/skin-#{utilMB.colorTemplate}.css"/>
         <h:outputStylesheet name="css/aquiles-core-#{utilMB.colorTemplate}.css"/>
 
         <composite:insertChildren/>
 
-        <link rel="shortcut icon" type="image/x-icon"
-              href="#{resource[cc.attrs.faviconPath]}"/>
-
+        <h:panelGroup rendered="#{not cc.attrs.useIcoPathAsURL}">
+            <link rel="shortcut icon" type="image/x-icon"
+                  href="#{resource[cc.attrs.faviconPath]}"/>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{cc.attrs.useIcoPathAsURL}">
+            <link rel="shortcut icon" type="image/x-icon"
+                  href="#{cc.attrs.faviconPath}"/>
+        </h:panelGroup>
     </h:head>
 </composite:implementation>
 </html>

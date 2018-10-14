@@ -17,6 +17,8 @@
                          required="true"/>
     <composite:attribute name="logoPath" shortDescription="Caminho da logomarca que será carregada no template"
                          required="true"/>
+    <composite:attribute name="useLogoPathAsURL" shortDescription="If TRUE logo path is used as URL in graphicImage"
+                         default="false" type="java.lang.Boolean"/>
     <composite:attribute name="logoWidthExpanded"
                          shortDescription="Largura da logomarca quando a barra de menu estiver expandida"
                          default="25"/>
@@ -73,15 +75,29 @@
                 <!-- Logo -->
                 <h:link outcome="/core/index" styleClass="logo">
                     <!-- mini logo for sidebar mini 50x50 pixels -->
+                    <h:panelGroup rendered="#{not cc.attrs.useLogoPathAsURL}">
                     <span class="logo-mini"><h:graphicImage
                             name="#{cc.attrs.logoPath}" width="#{cc.attrs.logoWidthCollapsed}"
                             height="#{cc.attrs.logoHeightCollapsed}"
                             style="margin-top:4px" styleClass="#{cc.attrs.imgCircle?'img-circle':''}"/></span>
-                    <!-- logo for regular state and mobile devices -->
-                    <span class="logo-lg"><h:graphicImage
-                            name="#{cc.attrs.logoPath}" width="#{cc.attrs.logoWidthExpanded}"
-                            height="#{cc.attrs.logoHeightExpanded}"
-                            styleClass="#{cc.attrs.imgCircle?'img-circle':''}"/> #{cc.attrs.projectName}</span>
+                        <!-- logo for regular state and mobile devices -->
+                        <span class="logo-lg"><h:graphicImage
+                                name="#{cc.attrs.logoPath}" width="#{cc.attrs.logoWidthExpanded}"
+                                height="#{cc.attrs.logoHeightExpanded}"
+                                styleClass="#{cc.attrs.imgCircle?'img-circle':''}"/> #{cc.attrs.projectName}</span>
+                    </h:panelGroup>
+
+                    <h:panelGroup rendered="#{cc.attrs.useLogoPathAsURL}">
+                    <span class="logo-mini"><h:graphicImage
+                            url="#{cc.attrs.logoPath}" width="#{cc.attrs.logoWidthCollapsed}"
+                            height="#{cc.attrs.logoHeightCollapsed}"
+                            style="margin-top:4px" styleClass="#{cc.attrs.imgCircle?'img-circle':''}"/></span>
+                        <!-- logo for regular state and mobile devices -->
+                        <span class="logo-lg"><h:graphicImage
+                                url="#{cc.attrs.logoPath}" width="#{cc.attrs.logoWidthExpanded}"
+                                height="#{cc.attrs.logoHeightExpanded}"
+                                styleClass="#{cc.attrs.imgCircle?'img-circle':''}"/> #{cc.attrs.projectName}</span>
+                    </h:panelGroup>
                 </h:link>
 
                 <!-- Header Navbar -->
@@ -116,8 +132,8 @@
                             <!-- Informações do usuário logado -->
                             <h:panelGroup rendered="#{cc.attrs.enableDropdownUserMenu}">
                                 <aquiles:dropdownUserMenu targetPageMeusDados="#{cc.attrs.targetPageMeusDados}"
-                                                         actionListenerLogout="#{cc.attrs.actionListenerLogout}"
-                                                         renderButtonMeusDados="#{cc.attrs.renderButtonMeusDados}">
+                                                          actionListenerLogout="#{cc.attrs.actionListenerLogout}"
+                                                          renderButtonMeusDados="#{cc.attrs.renderButtonMeusDados}">
                                     <h:panelGroup rendered="#{cc.attrs.enableIncludeDropdownUserMenu}">
                                         <ui:include src="#{cc.attrs.includeDropdownUserMenu}"/>
                                     </h:panelGroup>
@@ -228,8 +244,8 @@
         <h:outputScript name="third/plugins/summernote/summernote.js"/>
 
         <!-- bootstrap-datetimepicker -->
-        <h:outputScript name="third/plugins/bootstrap-datetimepicker/moment-with-locales.min.js" />
-        <h:outputScript name="third/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" />
+        <h:outputScript name="third/plugins/bootstrap-datetimepicker/moment-with-locales.min.js"/>
+        <h:outputScript name="third/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"/>
 
         <!-- AdminLTE App -->
         <h:outputScript name="third/dist/js/app.min.js"/>

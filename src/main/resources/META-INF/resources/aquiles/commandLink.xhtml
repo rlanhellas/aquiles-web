@@ -25,11 +25,13 @@
     <composite:attribute name="sRequireConfirm" default="false"/>
     <composite:attribute name="sOnclick"
                          default="#{cc.attrs.sRequireConfirm ? 'if (!confirm(\'Deseja confirma esta ação ?\'))return false;' : ''}"/>
+    <composite:attribute name="sTarget"
+                         default="_self"/>
 </composite:interface>
 
 <composite:implementation>
     <h:panelGroup rendered="#{cc.attrs.sUseAction}">
-        <h:commandLink title="#{cc.attrs.sTitle}"
+        <h:commandLink title="#{cc.attrs.sTitle}" target="#{cc.attrs.sTarget}"
                        action="#{cc.attrs.sAction}"
                        onclick="#{cc.attrs.sOnclick}"
                        styleClass="btn btn-labeled #{cc.attrs.sStyleClass}
@@ -43,7 +45,7 @@
         </h:commandLink>
     </h:panelGroup>
     <h:panelGroup rendered="#{not cc.attrs.sUseAction}">
-        <h:commandLink title="#{cc.attrs.sTitle}"
+        <h:commandLink title="#{cc.attrs.sTitle}" target="#{cc.attrs.sTarget}"
                        actionListener="#{cc.attrs.sActionListener}"
                        onclick="#{cc.attrs.sOnclick}"
                        styleClass="btn btn-labeled #{cc.attrs.sStyleClass}

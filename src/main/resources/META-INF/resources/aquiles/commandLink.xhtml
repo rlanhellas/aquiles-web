@@ -39,7 +39,8 @@
         <span class="btn-label">
           <i class="#{cc.attrs.sFontAwesomeIcon}" aria-hidden="true"></i>
         </span>
-            <f:ajax execute="#{cc.attrs.sAjaxExecute}" render="#{cc.attrs.sAjaxRender}"
+            <f:ajax disabled="#{cc.attrs.sTarget eq '_blank'}" execute="#{cc.attrs.sAjaxExecute}"
+                    render="#{cc.attrs.sAjaxRender}"
                     onevent="#{cc.attrs.sShowProcessing ? 'callLoading' : cc.attrs.sOnEvent}"/>
             <h:outputText value=" #{cc.attrs.sLabel}" styleClass="hidden-xs"/>
         </h:commandLink>

@@ -7,6 +7,7 @@ import br.com.aquiles.security.dto.Subject;
 import br.com.aquiles.security.exception.LoginException;
 import br.com.aquiles.security.service.LoginService;
 import br.com.aquiles.security.service.SecurityService;
+import br.com.aquiles.security.service.SessionService;
 import br.com.aquiles.security.util.MenuUtils;
 
 import javax.enterprise.context.SessionScoped;
@@ -27,6 +28,10 @@ public class UtilMB extends AbstractMB {
     @Inject
     @Named(value = "securityService")
     private SecurityService securityService;
+
+    @Inject
+    @Named(value = "sessionService")
+    private SessionService sessionService;
 
     private String login;
     private String senha;
@@ -53,6 +58,7 @@ public class UtilMB extends AbstractMB {
 
     public String finalizeLogin(Subject subject) {
         getContextoUtil().setParamSession("subject", subject);
+        sessionService.addProp(SessionService.SUBJECT,subject);
         construirMenus();
         return navigateTo("/core/index.xhtml");
     }

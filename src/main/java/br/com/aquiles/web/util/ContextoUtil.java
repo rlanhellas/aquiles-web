@@ -1,7 +1,9 @@
 /**
- * 
+ *
  */
 package br.com.aquiles.web.util;
+
+import org.apache.log4j.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.ContextNotActiveException;
@@ -17,9 +19,11 @@ import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.util.Enumeration;
 
+import static java.util.Objects.isNull;
+
 /**
  * Classe responsavel por retornar os contextos da aplicacao
- * 
+ *
  * @author enemias.junior
  * @version 1.0.0 , em 01/07/2014
  * @since 1.0.0
@@ -28,113 +32,120 @@ import java.util.Enumeration;
 @ApplicationScoped
 public class ContextoUtil implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    private static final Logger log = Logger.getLogger(ContextoUtil.class);
 
-	@Inject
-	private FacesContext facesContext;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	private static final String IDENT_REQUEST_PARAM = "@";
+    @Inject
+    private FacesContext facesContext;
 
-	@Produces
-	@RequestScoped
-	public FacesContext getFacesContext() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		if (context == null)
-			throw new ContextNotActiveException("FacesContext is not active");
-		return context;
-	}
+    private static final String IDENT_REQUEST_PARAM = "@";
 
-	/**
-	 * Retornar a instância ExternalContext para a instância FacesContext.
-	 * 
-	 * @return ExternalContext
-	 */
-	public ExternalContext getExternalContext() {
-		return facesContext.getExternalContext();
-	}
+    @Produces
+    @RequestScoped
+    public FacesContext getFacesContext() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context == null)
+            throw new ContextNotActiveException("FacesContext is not active");
+        return context;
+    }
 
-	/**
-	 * Retorna um String contendo o caminho real para um determinado caminho
-	 * virtual.
-	 * 
-	 * @return realPath
-	 */
-	public String getRealPath() {
-		return getExternalContext().getRealPath("");
-	}
+    /**
+     * Retornar a instância ExternalContext para a instância FacesContext.
+     *
+     * @return ExternalContext
+     */
+    public ExternalContext getExternalContext() {
+        return facesContext.getExternalContext();
+    }
 
-	public HttpSession getSessao() {
-		return (HttpSession) getExternalContext().getSession(true);
-	}
+    /**
+     * Retorna um String contendo o caminho real para um determinado caminho
+     * virtual.
+     *
+     * @return realPath
+     */
+    public String getRealPath() {
+        return getExternalContext().getRealPath("");
+    }
 
-	public HttpServletResponse getResponse() {
-		return (HttpServletResponse) getExternalContext().getResponse();
-	}
+    public HttpSession getSessao() {
+        if (isNull(getExternalContext().getSession(false))) {
+            log.info("Sessão não encontrada, criando uma nova ...");
+        }
+        HttpSession httpSession = (HttpSession) getExternalContext().getSession(true);
+        log.info("SessionId: " + httpSession.getId());
+        return httpSession;
+    }
 
-	public HttpServletRequest getRequest() {
-		return (HttpServletRequest) getExternalContext().getRequest();
-	}
+    public HttpServletResponse getResponse() {
+        return (HttpServletResponse) getExternalContext().getResponse();
+    }
 
-	/**
-	 * Método para guardar os objetos entre os beans
-	 * 
-	 * @param key
-	 * @param object
-	 */
-	public void setParamSession(String key, Object object) {
-		getSessao().setAttribute(key, object);
+    public HttpServletRequest getRequest() {
+        return (HttpServletRequest) getExternalContext().getRequest();
+    }
 
-	}
+    /**
+     * Método para guardar os objetos entre os beans
+     *
+     * @param key
+     * @param object
+     */
+    public void setParamSession(String key, Object object) {
+        getSessao().setAttribute(key, object);
 
-	public Object getParamSession(String key) {
-		return getSessao().getAttribute(key);
-	}
+    }
 
-	public void removeAttribute(String key) {
-		getSessao().removeAttribute(key);
-	}
+    public Object getParamSession(String key) {
+        return getSessao().getAttribute(key);
+    }
 
-	public Object getParamRequest(String nome) {
-		if (nome.startsWith(IDENT_REQUEST_PARAM)) {
-			return getParamSession(nome);
-		} else {
-			return getParamSession(IDENT_REQUEST_PARAM + nome);
-		}
-	}
+    public void removeAttribute(String key) {
+        getSessao().removeAttribute(key);
+    }
 
-	public Object popParamRequest(String nome) {
-		Object r = getParamRequest(nome);
-		removeParamRequest(nome);
-		return r;
-	}
+    public Object getParamRequest(String nome) {
+        if (nome.startsWith(IDENT_REQUEST_PARAM)) {
+            return getParamSession(nome);
+        } else {
+            return getParamSession(IDENT_REQUEST_PARAM + nome);
+        }
+    }
 
-	public void removeParamRequest(String nome) {
-		if (nome.startsWith(IDENT_REQUEST_PARAM)) {
-			removeAttribute(nome);
-		} else {
-			removeAttribute(IDENT_REQUEST_PARAM + nome);
-		}
-	}
+    public Object popParamRequest(String nome) {
+        Object r = getParamRequest(nome);
+        removeParamRequest(nome);
+        return r;
+    }
 
-	public void setParamRequest(String nome, Object valor) {
-		if (nome.startsWith(IDENT_REQUEST_PARAM)) {
-			setParamSession(nome, valor);
-		} else {
-			setParamSession(IDENT_REQUEST_PARAM + nome, valor);
-		}
-	}
+    public void removeParamRequest(String nome) {
+        if (nome.startsWith(IDENT_REQUEST_PARAM)) {
+            removeAttribute(nome);
+        } else {
+            removeAttribute(IDENT_REQUEST_PARAM + nome);
+        }
+    }
 
-	public void clearRequestParams() {
-		Enumeration<String> attrs = getSessao().getAttributeNames();
-		while(attrs.hasMoreElements()){
-			String key = attrs.nextElement();
-			if (key.startsWith(IDENT_REQUEST_PARAM)) {
-				removeParamRequest(key);
-			}
-		}
-	}
+    public void setParamRequest(String nome, Object valor) {
+        if (nome.startsWith(IDENT_REQUEST_PARAM)) {
+            setParamSession(nome, valor);
+        } else {
+            setParamSession(IDENT_REQUEST_PARAM + nome, valor);
+        }
+    }
+
+    public void clearRequestParams() {
+        Enumeration<String> attrs = getSessao().getAttributeNames();
+        while (attrs.hasMoreElements()) {
+            String key = attrs.nextElement();
+            if (key.startsWith(IDENT_REQUEST_PARAM)) {
+                removeParamRequest(key);
+            }
+        }
+    }
 
 }

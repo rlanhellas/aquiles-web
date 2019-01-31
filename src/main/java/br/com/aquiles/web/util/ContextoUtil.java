@@ -73,12 +73,7 @@ public class ContextoUtil implements Serializable {
     }
 
     public HttpSession getSessao() {
-        if (isNull(getExternalContext().getSession(false))) {
-            log.info("Sessão não encontrada, criando uma nova ...");
-        }
-        HttpSession httpSession = (HttpSession) getExternalContext().getSession(true);
-        log.info("SessionId: " + httpSession.getId());
-        return httpSession;
+        return (HttpSession) getExternalContext().getSession(true);
     }
 
     public HttpServletResponse getResponse() {

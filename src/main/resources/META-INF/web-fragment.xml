@@ -85,28 +85,6 @@
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/core/*</url-pattern>
     </filter-mapping>
-
-    <filter>
-        <filter-name>AquilesHeaderSecurityFilter</filter-name>
-        <filter-class>br.com.aquiles.web.filter.AquilesHeaderSecurityFilter</filter-class>
-        <init-param>
-            <param-name>mode</param-name>
-            <param-value>SAMEORIGIN</param-value>
-        </init-param>
-        <init-param>
-            <param-name>type</param-name>
-            <param-value>nosniff</param-value>
-        </init-param>
-        <init-param>
-            <param-name>xssMode</param-name>
-            <param-value>1; mode=block</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>AquilesHeaderSecurityFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
     <filter>
         <filter-name>javamelody</filter-name>
         <filter-class>net.bull.javamelody.MonitoringFilter</filter-class>

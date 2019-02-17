@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>br.com.aquiles</groupId>
     <artifactId>aquiles-web</artifactId>
-    <version>1.4.4</version>
+    <version>1.4.5</version>
     <name>Aquiles Framework - Web</name>
 
     <properties>
@@ -14,7 +14,7 @@
         <java.version>1.8</java.version>
         <name>${project.name}</name>
         <version>${project.version}</version>
-        <aquiles-core.version>1.1.0</aquiles-core.version>
+        <aquiles-core.version>1.1.1</aquiles-core.version>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.login>fd69aca26fc035882e0b8401cf52f8bedca6bd6d</sonar.login>
         <sonar.projectKey>rlanhellas_aquiles-web</sonar.projectKey>
@@ -23,8 +23,8 @@
 
     <distributionManagement>
         <repository>
-            <id>releases</id>
-            <url>http://ocean.querobuy.com.br:8081/repository/maven-releases/</url>
+            <id>nexus</id>
+            <url>http://lanhellas.xyz:8081/repository/maven-releases/</url>
         </repository>
     </distributionManagement>
 

@@ -21,12 +21,12 @@
         <sonar.organization>rlanhellas-github</sonar.organization>
     </properties>
 
-    <distributionManagement>
+    <repositories>
         <repository>
-            <id>nexus</id>
-            <url>http://lanhellas.xyz:8081/repository/maven-releases/</url>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
-    </distributionManagement>
+    </repositories>
 
     <developers>
         <developer>

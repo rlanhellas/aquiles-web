@@ -6,11 +6,12 @@ This JAR contains the Web plugin of Aquiles Framework
 ### How to Use ? 
 Just add the following code in your pom.xml
 
-    <dependency>
-                <groupId>br.com.aquiles</groupId>
+       <dependency>
+                <groupId>com.github.rlanhellas</groupId>
                 <artifactId>aquiles-web</artifactId>
                 <version>YOUR-VERSION-HERE</version>
-      </dependency>
+            </dependency>
+
 
 
 ### Content 

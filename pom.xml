@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.rlanhellas</groupId>
     <artifactId>aquiles-web</artifactId>
-    <version>1.5.0</version>
+    <version>1.5.1</version>
     <name>Aquiles Framework - Web</name>
 
     <properties>
@@ -24,6 +24,14 @@
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
+        </repository>
+        <repository>
+            <id>jasperreports</id>
+            <url>http://jasperreports.sourceforge.net/maven2</url>
+        </repository>
+        <repository>
+            <id>jaspersoft-third-party</id>
+            <url>http://jaspersoft.artifactoryonline.com/jaspersoft/third-party-ce-artifacts/</url>
         </repository>
     </repositories>
 

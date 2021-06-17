@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.rlanhellas</groupId>
     <artifactId>aquiles-web</artifactId>
-    <version>1.6.0</version>
+    <version>1.6.1</version>
     <name>Aquiles Framework - Web</name>
 
     <properties>
@@ -100,7 +100,7 @@
         <dependency>
             <groupId>com.github.rlanhellas</groupId>
             <artifactId>aquiles-core</artifactId>
-            <version>1.1.1</version>
+            <version>1.1.2</version>
         </dependency>
 
         <dependency>
